@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laser·Mark</title><link rel="stylesheet" href="estilos.css">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#16130f"><link rel="icon" href="icon-192.png"></head>
+<body>
+<div id="cam">
+  <video id="v" playsinline muted autoplay></video><div class="vg"></div>
+  <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><i class="cross"></i>
+  <div class="top"><span><b>Laser·Mark</b><small>v1</small></span><span id="hud" class="hud">INICIANDO</span></div>
+  <button id="btnAct" class="act hide">Activar cámara</button>
+  <button id="btnGal" class="arch">Archivo<span id="cnt">00</span></button>
+</div>
+<section id="gal" class="hide"><header><button class="o" id="gBack">◂ Cámara</button><h2>Archivo</h2></header><div id="grid"></div></section>
+<section id="det" class="hide"></section>
+<div id="toast" class="hide"></div>
+<script src="config.js"></script><script src="detector.js"></script><script src="app.js"></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}</script>
+</body></html>
