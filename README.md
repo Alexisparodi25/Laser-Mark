@@ -72,4 +72,4 @@ Como el APK abre la página publicada, los cambios que subas se reflejan sin gen
 
 ## Autores
 
-Proyecto educativo. Autores: _(completar)_.
+Proyecto educativo. Autores: Alexis Parodi
