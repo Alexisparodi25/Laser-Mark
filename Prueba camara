@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prueba de cámaras</title>
+<style>body{font-family:system-ui,sans-serif;margin:0;padding:16px;background:#f2f6f4;color:#12302a}button{padding:12px 14px;margin:4px 4px 4px 0;border:0;border-radius:10px;background:#0f9d7a;color:#fff;font-weight:700;font-size:14px}video{width:100%;background:#000;border-radius:14px;aspect-ratio:4/3;object-fit:cover;margin-top:10px}pre{white-space:pre-wrap;font-size:13px;background:#fff;padding:12px;border-radius:10px}a{color:#0a7a5f;font-weight:700}</style></head><body>
+<h2>Prueba de cámaras</h2>
+<p>Sirve para saber qué cámara del celular entrega imagen. Tocá el primer botón, aceptá el permiso y probá cada cámara de la lista.</p>
+<button id="b0">1. Pedir permiso y listar cámaras</button><button id="b1">Probar cámara predeterminada</button><div id="lst"></div>
+<video id="v" playsinline muted autoplay></video><pre id="info">Sin datos todavía.</pre>
+<p><a href="index.html">◂ Volver a la app</a></p>
+<script>
+const $=i=>document.getElementById(i),v=$("v");let st=null,lastT=-1,nombre="-";
+const cv=document.createElement("canvas"),cx=cv.getContext("2d",{willReadFrequently:true});cv.width=64;cv.height=48;
+const info=t=>{$("info").textContent=t;};
+async function probar(id,label){
+  try{ if(st)st.getTracks().forEach(t=>t.stop());
+    st=await navigator.mediaDevices.getUserMedia({video:id?{deviceId:{exact:id}}:{facingMode:{ideal:"environment"}},audio:false});
+    v.srcObject=st; nombre=label||"predeterminada"; await v.play(); }
+  catch(e){ st=null; info("ERROR: "+e.name+" — "+e.message); }
+}
+async function listar(){
+  try{const s=await navigator.mediaDevices.getUserMedia({video:true,audio:false});s.getTracks().forEach(t=>t.stop());}
+  catch(e){return info("ERROR de permiso: "+e.name+" — "+e.message);}
+  const d=(await navigator.mediaDevices.enumerateDevices()).filter(x=>x.kind==="videoinput");
+  $("lst").innerHTML=d.length?d.map((x,i)=>'<button data-id="'+x.deviceId+'" data-l="'+(x.label||"Cámara "+(i+1))+'">'+(i+1)+". "+(x.label||"Cámara "+(i+1))+"</button>").join(""):"No se encontraron cámaras.";
+}
+$("lst").onclick=e=>{const b=e.target.closest("button");if(b)probar(b.dataset.id,b.dataset.l);};
+$("b0").onclick=listar;$("b1").onclick=()=>probar(null);
+setInterval(()=>{ if(!st)return; const t=st.getVideoTracks()[0];
+  cx.drawImage(v,0,0,64,48); const d=cx.getImageData(0,0,64,48).data; let s=0;for(let i=0;i<d.length;i+=4)s+=d[i]+d[i+1]+d[i+2];
+  const lum=s/(d.length/4*3), av=v.currentTime!==lastT; lastT=v.currentTime;
+  info("Cámara: "+nombre+"\nPista: "+t.readyState+(t.muted?" (SIN SEÑAL)":"")+"\nResolución: "+v.videoWidth+"×"+v.videoHeight+"\nVideo: "+(av?"avanza":"detenido")+"\nBrillo promedio: "+lum.toFixed(1)+" (0 = negro total)\n"+(lum<2?"→ Esta cámara entrega imagen NEGRA.":"→ Esta cámara entrega imagen.")); },700);
+</script></body></html>
