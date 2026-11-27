@@ -11,7 +11,7 @@ const CFG = {
   pxMin: 2, pxMaxFrac: 0.002,  // tamaño mínimo y máximo de la mancha (fracción de la imagen)
   elongMax: 1.8        // 1 = redondo; más alargado que esto se descarta
 };
-// Información de cada foto. Agregar un campo = agregar una línea.
+// Información de cada foto. Agregar un campo = agregar una línea (area:true = cuadro grande).
 const CAMPOS = [
   { k: "titulo", l: "Título" },
   { k: "desc", l: "Descripción", area: true },
