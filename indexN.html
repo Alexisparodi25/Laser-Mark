@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Laser·Mark</title><link rel="stylesheet" href="estilos.css">
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#16130f"><link rel="icon" href="icon-192.png"></head>
+<title>LáserCam</title><link rel="stylesheet" href="estilos.css">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f9d7a"><link rel="icon" href="icon-192.png"></head>
 <body>
-<div id="cam">
-  <video id="v" playsinline muted autoplay></video><canvas id="ov"></canvas><div class="vg"></div>
-  <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><i class="cross"></i>
-  <div class="top"><span><b>Laser·Mark</b><small>v2</small></span><span id="hud" class="hud">INICIANDO</span></div>
-  <button id="btnCamSig" class="sq hide" aria-label="Cambiar de cámara">⟲</button>
-  <div id="aviso" class="aviso hide"><p id="avTxt"></p><button id="btnAct">Reintentar</button></div>
-  <div class="bar">
-    <button id="btnGal" class="pb">Archivo<span id="cnt">00</span></button>
-    <button id="btnObt" class="obt" aria-label="Capturar ahora"></button>
-    <button id="btnAj" class="pb">Ajustes</button>
+<header class="top"><div class="brand"><span class="logo"></span>LáserCam <small>v3</small></div><span id="chip" class="chip">Cámara apagada</span></header>
+<main id="base">
+  <div id="stage">
+    <video id="v" playsinline muted autoplay></video><canvas id="ov"></canvas><div id="flash"></div>
+    <div id="msg">Cámara apagada.<br>Tocá <b>Iniciar cámara</b> para empezar.</div>
   </div>
-</div>
-<section id="gal" class="hide">
-  <header><button class="o" data-back>◂ Cámara</button><h2>Archivo</h2></header>
-  <div class="tools"><input id="q" placeholder="Buscar por título, lugar, etiquetas..."><button class="o" id="bFav">★ Todas</button><button class="o" id="bOrd">Más nuevas</button></div>
-  <div id="grid"></div>
+  <div id="diag" class="diag"></div>
+  <div class="ctrl">
+    <button id="bSwap" class="rb inv" aria-label="Cambiar de cámara"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M17 7l-3 3M20 17H7l3-3M7 17l3 3"/></svg></button>
+    <button id="bMain" class="big">Iniciar cámara</button>
+    <button id="bOff" class="rb inv" aria-label="Apagar cámara"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v8M6.3 6.6a8 8 0 1 0 11.4 0"/></svg></button>
+  </div>
+  <p class="hint">Apuntá el láser rojo a la escena y mantenelo quieto un instante. Si ves una imagen muy abierta (lente 0.5), tocá el botón de cambiar cámara.</p>
+</main>
+<section id="p-fotos" class="panel">
+  <div class="seg"><button id="bAll" class="on">Todas</button><button id="bFavF">★ Favoritas</button><span class="sp"></span><button id="bRec" class="on">Recientes</button><button id="bOld">Antiguas</button></div>
+  <input id="q" class="search" placeholder="Buscar por título, lugar, etiquetas...">
+  <div id="lista"></div>
 </section>
-<section id="aj" class="hide">
-  <header><button class="o" data-back>◂ Cámara</button><h2>Ajustes</h2></header>
-  <div id="ajc"></div>
-</section>
-<section id="det" class="hide"></section>
+<section id="p-aj" class="panel"><div id="ajc"></div></section>
+<nav class="tabs"><button data-t="cam" class="on">Cámara</button><button data-t="fotos">Fotos <i id="cnt"></i></button><button data-t="aj">Ajustes</button></nav>
+<div id="sheet" class="hide"><div id="sheetBox"></div></div>
 <div id="toast" class="hide"></div>
 <script src="config.js"></script><script src="detector.js"></script><script src="app.js"></script>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}</script>
